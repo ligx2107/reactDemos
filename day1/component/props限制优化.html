@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件实例属性之props限制优化</title>
+</head>
+<body>
+    <!-- 创建容器 -->
+    <div id="test"></div>
+    <div id="test1"></div>
+
+    <!-- 引入核心库-->
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <!-- 引入react-dom，处理虚拟dom -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <!-- 引入babel, 将jsx转为js -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <!-- 引入prop-types，对props属性进行限制 -->
+    <script type="text/javascript" src="../../js/prop-types.js"></script>
+    <!-- type为babel -->
+    <script type="text/babel">
+        class Person extends React.Component {
+            render(){
+                //解构获取props内参数信息
+                const {name, age} = this.props;
+
+                //props是只读的，不可修改, 异常：this.props.name = 'aa';
+                return (
+                    <ul>
+                        <li>姓名：{name}</li>
+                        <li>姓名：{age}</li>
+                    </ul>
+                );
+            }
+
+            //为类增加静态属性，完成对props属性的类型及必要性做出限制
+            static propTypes = {
+                name: PropTypes.string.isRequired,
+                age: PropTypes.number  
+            }
+
+            //为类增加静态属性，完成对props属性默认值的设置
+            static defaultProps = {
+                name: 'zhangsan',
+                age: 10
+            }
+        }
+
+        //reder时传入参数
+        ReactDOM.render(<Person name='lisi' age={18} />, document.getElementById('test'));
+        //批量传递参数 
+        const p1 = {name:'wangwu', age:20};
+        ReactDOM.render(<Person {...p1} />, document.getElementById('test1'));
+    </script>
+</body>
+</html>

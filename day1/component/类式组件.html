@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>类式组件</title>
+</head>
+<body>
+    <!-- 创建容器 -->
+    <div id="test"></div>
+
+    <!-- 引入核心库-->
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <!-- 引入react-dom，处理虚拟dom -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <!-- 引入babel, 将jsx转为js -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <!-- type为babel -->
+    <script type="text/babel">
+        //类式组件适用于复杂组件(有状态)
+        //声明类式组件，需继承React的组件类
+        class Mycom extends React.Component {
+            //必须重写render方法，且必须有返回值
+            render(){
+                return <h1>类式组件定义</h1>
+            }
+        }
+
+        //渲染类式组件到页面
+        /**
+         * React解析组件标签<Mycom />，找到Mycom组件
+         * Mycom组件是类式组件，new组件类的实例并调用该实例的render方法，render方法内部的this指向类组件实例
+         * 将render方法返回的虚拟DOM转为真实DOM并渲染在页面上
+         * */
+        ReactDOM.render(<Mycom />, document.getElementById('test'));
+    </script>
+</body>
+</html>

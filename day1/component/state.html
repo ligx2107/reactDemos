@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件实例属性之state</title>
+</head>
+<body>
+    <!-- 创建容器 -->
+    <div id="test"></div>
+
+    <!-- 引入核心库-->
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <!-- 引入react-dom，处理虚拟dom -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <!-- 引入babel, 将jsx转为js -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <!-- type为babel -->
+    <script type="text/babel">
+        //声明组件
+        class TrueOrFalse extends React.Component {
+            //通过构造函数初始化state数据
+            constructor(props){
+                //构造器是否接受props，是否传递给super，取决于：是否希望在构造器中通过this访问props
+                super(props)
+                //state数据需为对象类型
+                this.state = {flag: false} 
+                //将组件类原型链上的testOnClick方法绑定到当前实例对象上
+                this.testOnClick = this.testOnClick.bind(this)
+            }
+            
+            render(){
+                //虚拟DOM上添加点击事件，通过{}指定事件回调函数
+                return <h1 onClick={this.testOnClick}>是{this.state.flag ? '真' : '假'}</h1>
+            }
+
+            //定义点击事件
+            testOnClick(){
+                //testOnClick()在组件类TrueOrFalse的原型对象上(TrueOrFalse.prototype)，供实例调用
+                //由于testOnClick作为onClick的回调，不是实例调用，类中的方法默认开启了局部严格模式，所以在不做特殊处理的情况下，方法中的this不是组件实例对象
+                console.log(this.state.flag);
+                
+                //注意：状态(state)不可直接修改，必须通过setState进行修改，且为合并而非替换操作
+                //this.state.flag = !this.state.flag
+                this.setState({flag: !this.state.flag})
+            }
+        }
+        ReactDOM.render(<TrueOrFalse />, document.getElementById('test'));
+    </script>
+</body>
+</html>

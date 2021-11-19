@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsx语法规则</title>
+    <style>
+        .test{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- 创建容器 -->
+    <div id="test"></div>
+
+    <!-- 引入核心库-->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom，处理虚拟dom -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel, 将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- type为babel -->
+    <script type="text/babel">
+        /**
+         * jsx语法规则：
+         * 1. 定义虚拟DOM时，不要写引号
+         * 2. 标签中使用{}引用js表达式
+         * 3. className表示样式的类名
+         * 4. 内联样式，需用style={{key:value}}的形式
+         * 5. 虚拟DOM只能有一个根标签，且所有标签必须闭合
+         * 6. 标签首字母小写，则将该标签转为html对应的同名元素，不存在则报错；首字母大写，react则去渲染对应的组件，不存在则报错
+         * */
+        const hId = "h1";
+        const data = "Hello, React";
+        const vd = (
+            <h1 id={hId.toLowerCase()} className="test">
+                <span style={{color:'white'}}>{data.toLowerCase()}</span>
+            </h1>
+        )
+        ReactDOM.render(vd, document.getElementById('test'));
+    </script>
+</body>
+</html>

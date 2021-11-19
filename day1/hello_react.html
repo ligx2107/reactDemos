@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello react</title>
+</head>
+<body>
+    <!-- 创建容器 -->
+    <div id="test"></div>
+
+    <!-- 引入核心库-->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 引入react-dom，处理虚拟dom -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- 引入babel, 将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- type为babel -->
+    <script type="text/babel">
+        /**
+         * 关于虚拟DOM:
+         * 1. 虚拟DOM本质是Object类型的对象
+         * 2. 虚拟DOM较真实DOM更轻量，只为React内部使用
+         * 3. 虚拟DOM最后会被React转化为真实DOM并渲染到页面上
+         * */
+        //使用jsx方式创建虚拟DOM
+        const vd = (
+            <h1>
+                <span>Hello, React</span>
+            </h1>
+        );
+        //调用render方法，将创建的虚拟DOM渲染到指定的容器内
+        ReactDOM.render(vd, document.getElementById('test'))
+
+        console.log('虚拟DOM', vd)
+        console.log(vd instanceof Object)
+    </script>
+    <!--
+    <script type="text/javascript">
+        //使用React.createElement()方式创建虚拟DOM，当出现标签嵌套时使用繁琐
+        const vd = React.createElement('h1', {id:'t1'}, 'Hello, React');
+        //调用render方法，将创建的虚拟DOM渲染到指定的容器内
+        ReactDOM.render(vd, document.getElementById('test'));
+    </script>
+    -->
+</body>
+</html>

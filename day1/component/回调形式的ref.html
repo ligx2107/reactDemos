@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件实例属性之ref(回调形式)</title>
+</head>
+<body>
+    <!-- 创建容器 -->
+    <div id="test"></div>
+    <div id="test1"></div>
+
+    <!-- 引入核心库-->
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <!-- 引入react-dom，处理虚拟dom -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <!-- 引入babel, 将jsx转为js -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <!-- 引入prop-types，对props属性进行限制 -->
+    <script type="text/javascript" src="../../js/prop-types.js"></script>
+    <!-- type为babel -->
+    <script type="text/babel">
+        /**
+         * 回调形式的ref：
+         * 1.标签的ref属性值为回调函数引用，调用React实例的render方法时，执行该回调函数，并将当前DOM节点作为参数传递到回调函数中
+         * 2.使用内联函数的回调形式，在更新的过程中会被执行两次，第一次传入null，第二次传入DOM节点元素，可以使用class的绑定函数方式避免这个问题(没有实质的影响)
+         * */
+        class CallBackRefDemo extends React.Component {
+            //定义按钮点击事件回调方法
+            showData = () => {
+                console.log(this);
+                alert(this.input.value)
+            }
+
+            changeFlag = () => {
+                const {flag} = this.state;
+                this.setState({flag: !flag});
+            }
+
+            state = {flag:true}
+
+            render(){
+                return (
+                    <div>
+                        <input ref={(currentNode) => {this.input = currentNode;console.log(currentNode);}} type="text" placeholder="点击按钮提示数据"/>&nbsp;
+                        <button onClick={this.showData}>点击提示数据</button>
+                        <h2>{this.state.flag ? "是" : "否"}</h2>
+                        <button onClick={this.changeFlag}>改变是否</button>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(< CallBackRefDemo />, document.getElementById('test'));
+    </script>
+</body>
+</html>

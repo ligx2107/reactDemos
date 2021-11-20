@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数式组件props</title>
+</head>
+<body>
+    <!-- 创建容器 -->
+    <div id="test"></div>
+    <div id="test1"></div>
+
+    <!-- 引入核心库-->
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <!-- 引入react-dom，处理虚拟dom -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <!-- 引入babel, 将jsx转为js -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <!-- 引入prop-types，对props属性进行限制 -->
+    <script type="text/javascript" src="../../js/prop-types.js"></script>
+    <!-- type为babel -->
+    <script type="text/babel">
+        //函数式组件通过函数自身的调用参数进行传递
+        function Person(props){
+            const {name, age} = props;
+            return (
+                <ul>
+                    <li>姓名：{name}</li>
+                    <li>姓名：{age}</li>
+                </ul>
+            );
+        }
+
+        //函数式组件只能在函数体外增加propTypes及defaultProps对调用参数进行限制
+        Person.propTypes = {
+            name: PropTypes.string.isRequired,
+            age: PropTypes.number  
+        }
+
+        
+        Person.defaultProps = {
+            name: 'zhangsan',
+            age: 10
+        }
+
+        //reder时传入参数
+        ReactDOM.render(<Person name='lisi' age={18} />, document.getElementById('test'));
+        //批量传递参数 
+        const p1 = {name:'wangwu', age:20};
+        ReactDOM.render(<Person {...p1} />, document.getElementById('test1'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件实例属性之ref(容器形式)</title>
+</head>
+<body>
+    <!-- 创建容器 -->
+    <div id="test"></div>
+    <div id="test1"></div>
+
+    <!-- 引入核心库-->
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <!-- 引入react-dom，处理虚拟dom -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <!-- 引入babel, 将jsx转为js -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <!-- 引入prop-types，对props属性进行限制 -->
+    <script type="text/javascript" src="../../js/prop-types.js"></script>
+    <!-- type为babel -->
+    <script type="text/babel">
+        class ContainerRefDemo extends React.Component {
+
+            //创建ref容器, 该容器可以存储被ref所标识的且指向本容器的DOM节点
+            refContainer = React.createRef();
+
+            //定义按钮点击事件回调方法
+            showData = () => {
+                console.log(this);
+                alert(this.refContainer.current.value)
+            }
+
+            render(){
+                return (
+                    <div>
+                        <input ref={this.refContainer} type="text" placeholder="点击按钮提示数据"/>&nbsp;
+                        <button onClick={this.showData}>点击提示数据</button>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(< ContainerRefDemo />, document.getElementById('test'));
+    </script>
+</body>
+</html>

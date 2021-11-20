@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件实例属性之ref(字符串类型)</title>
+</head>
+<body>
+    <!-- 创建容器 -->
+    <div id="test"></div>
+    <div id="test1"></div>
+
+    <!-- 引入核心库-->
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <!-- 引入react-dom，处理虚拟dom -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <!-- 引入babel, 将jsx转为js -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <!-- 引入prop-types，对props属性进行限制 -->
+    <script type="text/javascript" src="../../js/prop-types.js"></script>
+    <!-- type为babel -->
+    <script type="text/babel">
+        /**
+         * 字符串类型的ref官方已不再推荐使用，效率不高
+         * */
+        class StringRefDemo extends React.Component {
+            //定义按钮点击事件回调方法
+            showData = () => {
+                console.log(this);
+                //通过组件实例的refs属性获取带有ref标识的dom元素
+                const {data} = this.refs
+                alert(data.value);
+            }
+            render(){
+                return (
+                    <div>
+                        <input ref="data" type="text" placeholder="点击按钮提示数据"/>&nbsp;
+                        <button onClick={this.showData}>点击提示数据</button>    
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(< StringRefDemo />, document.getElementById('test'));
+    </script>
+</body>
+</html>

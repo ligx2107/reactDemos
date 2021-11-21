@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>验证Diffing算法</title>
+</head>
+<body>
+    <!-- 创建容器 -->
+    <div id="test"></div>
+
+    <!-- 引入核心库-->
+    <script type="text/javascript" src="../../js/react.development.js"></script>
+    <!-- 引入react-dom，处理虚拟dom -->
+    <script type="text/javascript" src="../../js/react-dom.development.js"></script>
+    <!-- 引入babel, 将jsx转为js -->
+    <script type="text/javascript" src="../../js/babel.min.js"></script>
+    <!-- type为babel -->
+    <script type="text/babel">
+        /*
+            1. diffing算法的最小粒度是组件，且为多层次递归比较
+            2. 虚拟DOM中key的作用：
+                a. key是虚拟DOM对象的标识，在更新显示时key起到极其重要的作用
+                b. 当state中的数据发生变化时，react会根据新数据生成新的虚拟DOM，随后React进行新虚拟DOM与旧虚拟DOM的Diffing比较，规则如下：
+                    b1. 旧虚拟DOM中找到了与新虚拟DOM相同的key：
+                        b1.1 如虚拟DOM中内容没有发生变化，则直接使用之前已有的真实DOM
+                        b1.2 如虚拟DOM中内容发生了变化，则生成对应的新的真实DOM，随后替换掉页面中之前的真实DOM
+                    
+                    b2. 旧虚拟DOM中未找到与新虚拟DOM相同的key：
+                        根据数据创建新的真实DOM，随后渲染到页面上
+
+            3. 用数据index作为key可能产生的问题：
+                a. 如果对数据进行逆序增加、逆序删除等破坏顺序的操作，会产生没有必要的真实DOM更新，页面展示没有问题，但是效率较低
+                b. 如果结构中还包含有输入类的DOM，会产生错误的DOM更新，页面出现错误
+
+            4. 开发中如何选择虚拟DOM的key：
+                a. 最好使用每条数据的唯一标识作为key
+                b. 如果只是简单的展示数据，那么使用index作为key也是没有问题的
+        
+        
+        */
+        class DiffingDemo extends React.Component {
+
+            state = {persons: [
+                {id:1,name:'zhangsan',age:19},
+                {id:2,name:'lisi',age:20}
+            ]};
+
+            addPerson = () => {
+                const {persons} = this.state;
+                const newPerson = {id:3, name:'wangwu', age:21};
+                this.setState({persons: [newPerson, ...persons]});
+            }
+
+            render(){
+                return (
+                    <div>
+                        <h1>列表数据</h1>
+                        <button onClick={this.addPerson}>添加人员</button>
+                        <ul>
+                            {
+                                this.state.persons.map((personObj) => {
+                                    return <li key={personObj.id}>姓名：{personObj.name} --- 年龄：{personObj.age}</li>
+                                })
+                            }    
+                        </ul>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(<DiffingDemo />, document.getElementById('test'));
+    </script>
+</body>
+</html>

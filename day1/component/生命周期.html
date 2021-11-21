@@ -24,19 +24,22 @@
          * 生命周期分为三个阶段：
          * 1. 初始化阶段：由ReactDOM.render()触发 -- 初次渲染
          *    a. constructor()
-         *    b. componentWillMount()
+         *    b0. (新)getDerivedStateFromProps()
+         *    b. (旧)componentWillMount()
          *    c. render()
          *    d. componentDidMount()  ----> 常用，一般做些初始化的事情，
          * 
          * 2. 更新阶段：由组件内部的this.setState()或父组件重新render触发
+         *    a0. (新)getDerivedStateFromProps()
          *    a. shouldComponentUpdate()
-         *    b. componentWillUpdate()
+         *    b. (旧)componentWillUpdate()
          *    c. render()
+         *    d0. (新)getSnapshotBeforeUpdate()
          *    d. componentDidUpdate()
          * 
          * 3. 卸载阶段：由ReactDOM.unmountComponentAtNode()触发
          *    a. componentWillUnmount() ----> 常用，一般做些收尾工作
-         * 
+         *
          * */
         class LifeCycleDemo extends React.Component {
 
